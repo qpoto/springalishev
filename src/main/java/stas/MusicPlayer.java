@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 import static stas.Genre.CLASSICAL;
+import static stas.Genre.ROCK;
 
 @Component
 public class MusicPlayer {
@@ -19,16 +20,13 @@ public class MusicPlayer {
         this.rockMusic = rockMusic;
     }
 
-    private Music music;
-
     public String playMusic(Genre genre) {
-        String track = "";
-        int random = new Random().nextInt(3);
         if (genre.equals(CLASSICAL)) {
-            track = classicalMusic.getSong().get(random);
+            return classicalMusic.getSong().get(new Random().nextInt(classicalMusic.getSong().size()));
+        } else if (genre.equals(ROCK)){
+            return rockMusic.getSong().get(new Random().nextInt(rockMusic.getSong().size()));
         } else {
-            track = rockMusic.getSong().get(random);
+            throw new IllegalArgumentException("Такого жанра нет");
         }
-        return track;
     }
 }
