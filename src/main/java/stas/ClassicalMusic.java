@@ -1,14 +1,22 @@
 package stas;
 
-import org.springframework.stereotype.Component;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
-import java.util.Arrays;
-import java.util.List;
+public class ClassicalMusic implements Music {
 
-@Component public class ClassicalMusic implements Music {
+    @PostConstruct
+    public void init() {
+        System.out.println("INIT");
+    }
+
+    @PreDestroy
+    public void destr() {
+        System.out.println("DESTR");
+    }
 
     @Override
-    public List<String> getSong() {
-        return Arrays.asList("C1", "C2", "C3");
+    public String getSong() {
+        return "ClassicalMusic";
     }
 }

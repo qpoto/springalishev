@@ -1,32 +1,36 @@
 package stas;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.util.List;
 import java.util.Random;
 
-import static stas.Genre.CLASSICAL;
-import static stas.Genre.ROCK;
-
-@Component
 public class MusicPlayer {
 
-    private Music classicalMusic;
-    private Music rockMusic;
+    @Value("${musicPlayer.name}")
+    private String name;
 
-    public MusicPlayer(@Qualifier("classicalMusic") Music classicalMusic,
-                       @Qualifier("rockMusic") Music rockMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
+    @Value("${musicPlayer.volume}")
+    private int volume;
+
+    public String getName() {
+        return name;
     }
 
-    public String playMusic(Genre genre) {
-        if (genre.equals(CLASSICAL)) {
-            return classicalMusic.getSong().get(new Random().nextInt(classicalMusic.getSong().size()));
-        } else if (genre.equals(ROCK)){
-            return rockMusic.getSong().get(new Random().nextInt(rockMusic.getSong().size()));
-        } else {
-            throw new IllegalArgumentException("Такого жанра нет");
-        }
+    public int getVolume() {
+        return volume;
     }
+
+    private List<Music> genreList;
+
+
+    public MusicPlayer(List<Music> genreList) {
+        this.genreList = genreList;
+    }
+
+    public String playMusic() {
+        return genreList.get(new Random().nextInt(genreList.size())).getSong();
+    }
+
+
 }

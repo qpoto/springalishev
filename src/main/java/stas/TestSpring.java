@@ -1,15 +1,15 @@
 package stas;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import static stas.Genre.CLASSICAL;
-import static stas.Genre.ROCK;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class TestSpring {
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+
         MusicPlayer musicPlayer = context.getBean("musicPlayer", MusicPlayer.class);
-        System.out.println(musicPlayer.playMusic(ROCK));
+
+        System.out.println(musicPlayer.playMusic());
+
         context.close();
     }
 }
